@@ -1,0 +1,1 @@
+export const endpoint = 'https://stars-wars-character-search.glitch.me/apiz'
