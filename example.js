@@ -18,3 +18,6 @@ const action1 = {
 }
 
 dispatch(action1);
+dispatch(action1);
+dispatch(action1); // store is now [{ answer: 42 }, { answer: 42 }, { answer: 42 }]
+console.log(store);
