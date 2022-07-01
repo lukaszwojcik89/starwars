@@ -1,71 +1,64 @@
-let store = []
-const MAGIC = 'Magic';
+let store = [];
+const MAGIC = 'MAGIC';
+
 
 function reducer(state, action) {
     if (action.type === MAGIC) {
         return [...state, action.payload]
     }
-    return state
+    return state;
 }
 
 function dispatch(action) {
-
     if (typeof action === 'function') {
-        action(dispatch)
+        action(dispatch);
     } else {
-        store.push(action)
+        store = reducer(store, action);
     }
-
-    store = reducer(store, action);
 }
 
 const action1 = {
     type: MAGIC,
-    payload: { answer: 42 }
+    payload: {answer: 42}
 }
 
 dispatch(action1);
 dispatch(action1);
-dispatch(action1); // store is now [{ answer: 42 }, { answer: 42 }, { answer: 42 }]
-////////////////////
-// to jest to samo co niżej
-dispatch ((dispatch_) =>{
-    dispatch_({
-        type: MAGIC,
-        payload: {magic: false}
-    })
-})
-console.log(store);
+dispatch(action1);
 
-// to jest to samo co wyżej 
-const doMagic = (dispatch_) =>{
-    dispatch_({
-        type: MAGIC,
-        payload: {magic: false}
-    })
-}
-dispatch (doMagic)
-console.log(store);
-////////////////////
-
-const upper = (text) => {
-    return text[0].toUpperCase() + text.slice[1];
+const doMagic = (dispatch_) => {
+    setTimeout(() => {
+        dispatch_({
+            type: MAGIC,
+            payload: {magic: false}
+        })
+    }, 100)
 }
 
-const reverse = (text) => {
-    return text.split('').reverse().join('');
-}
+dispatch(doMagic)
 
-const createSentece = (text, fn) => {
-    return fn(text);
-}
+setTimeout(() => {
+    console.log(store);
+}, 100)
 
-// console.log(createSentece(upper('Elo'), reverse));
-console.log(createSentece('Elo', upper, reverse));
 
+// const upper = (text) => {
+//     return text[0].toUpperCase() + text.slice(1);
+// }
+//
+// const reverse = (text) => {
+//     return text.split('').reverse().join('');
+// }
+//
+// const createSentence = (text, fn) => {
+//     return fn(text);
+// }
+
+// console.log(createSentence(upper('ala ma kota'), reverse));
+// console.log(createSentence(reverse('ala ma kota'), upper));
 
 // function notThunk() {
-//     return function thunk (){
-        
+//     return function thunk() {
+//
 //     }
 // }
